@@ -41,12 +41,13 @@ function parseCSV(text) {
       reading: cols[1].trim(),
       radical: cols[2].trim(),
       desc: cols[3].trim(),
+      // 5列目（画像パス）があれば読み込む。なければ空文字
+      image: cols[4] ? cols[4].trim() : "",
     });
   }
 
   if (data.length === 0) {
-    loadStatus.textContent =
-      "⚠️ データが読み込めなかったよ。形式を確認してね。";
+    loadStatus.textContent = "データが読み込めなかったよ。形式を確認してね。";
     loadStatus.className = "load-status";
     return;
   }
@@ -54,7 +55,7 @@ function parseCSV(text) {
   allData = data;
   currentRadical = "all";
 
-  loadStatus.textContent = `✅ ${data.length}件 読み込んだよ！`;
+  loadStatus.textContent = `${data.length}件 読み込んだよ！`;
   loadStatus.className = "load-status ok";
   loadArea.classList.add("has-data");
 
@@ -152,7 +153,21 @@ function renderCards() {
     const card = document.createElement("div");
     card.className = "card";
     card.style.animationDelay = `${Math.min(i * 30, 300)}ms`;
+
+    // 画像パスがあるときだけ <img> タグを作る
+    const imageHTML = item.image
+      ? `<div class="card-image-wrap">
+           <img
+             class="card-image"
+             src="${escHtml(item.image)}"
+             alt="${escHtml(item.word)}"
+             onerror="this.parentElement.classList.add('img-error'); this.parentElement.innerHTML='<span class=\\'img-error-msg\\'>画像が見つからなかったよ</span>'"
+           />
+         </div>`
+      : "";
+
     card.innerHTML = `
+        ${imageHTML}
         <div class="card-word">${escHtml(item.word)}</div>
         <div class="card-reading">${escHtml(item.reading)}</div>
         ${item.radical ? `<span class="card-radical">部首：${escHtml(item.radical)}</span>` : ""}
