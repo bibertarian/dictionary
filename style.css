@@ -274,9 +274,10 @@ header {
   font-size: 0.84rem;
   color: var(--text-mid);
   margin-top: 10px;
-  line-height: 1.7;
+  line-height: 1.8;
   border-top: 1px solid var(--cream-dark);
   padding-top: 10px;
+  word-break: break-word;
 }
 
 /* ===== EMPTY ===== */

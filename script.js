@@ -145,7 +145,7 @@ function renderCards() {
 
   if (filtered.length === 0 && allData.length > 0) {
     cardsGrid.innerHTML =
-      '<div style="grid-column:1/-1;text-align:center;color:var(--brown-light);padding:40px">該当する単語が見つからなかったよ🦫</div>';
+      '<div style="grid-column:1/-1;text-align:center;color:var(--brown-light);padding:40px">該当する単語が見つからなかったよ</div>';
     return;
   }
 
@@ -171,7 +171,7 @@ function renderCards() {
         <div class="card-word">${escHtml(item.word)}</div>
         <div class="card-reading">${escHtml(item.reading)}</div>
         ${item.radical ? `<span class="card-radical">部首：${escHtml(item.radical)}</span>` : ""}
-        <div class="card-desc">${escHtml(item.desc)}</div>
+        <div class="card-desc">${escHtmlWithBr(item.desc)}</div>
       `;
     cardsGrid.appendChild(card);
   });
@@ -183,4 +183,9 @@ function escHtml(str) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+// 説明欄用：HTMLエスケープしてから改行を <br> に変換する
+function escHtmlWithBr(str) {
+  return escHtml(str).replace(/\n/g, "<br>");
 }
