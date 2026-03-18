@@ -141,8 +141,24 @@ header {
 }
 .radical-buttons {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* グループ1行分 */
+.radical-group {
+  display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 6px;
+}
+/* グループ名ラベル */
+.radical-group-label {
+  font-size: 0.72rem;
+  color: var(--brown-light);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  min-width: 3.5em;
 }
 .radical-btn {
   background: white;

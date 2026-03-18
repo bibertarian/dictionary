@@ -10,6 +10,100 @@ const cardsGrid = document.getElementById("cardsGrid");
 const emptyState = document.getElementById("emptyState");
 const resultCount = document.getElementById("resultCount");
 
+// ===== 部首グループ対応表 =====
+// ここに「部首 → グループ名」を追加していく
+// ここにない部首は自動で「未分類」になる
+const RADICAL_GROUP_MAP = {
+  // 偏（へん）- 漢字の左側につく部首
+  亻: "偏",
+  氵: "偏",
+  木: "偏",
+  口: "偏",
+  土: "偏",
+  手: "偏",
+  扌: "偏",
+  糸: "偏",
+  言: "偏",
+  金: "偏",
+  火: "偏",
+  灬: "偏",
+  石: "偏",
+  田: "偏",
+  目: "偏",
+  日: "偏",
+  月: "偏",
+  足: "偏",
+  女: "偏",
+  子: "偏",
+  山: "偏",
+  弓: "偏",
+  王: "偏",
+  牛: "偏",
+  馬: "偏",
+  魚: "偏",
+  鳥: "偏",
+  虫: "偏",
+  貝: "偏",
+  車: "偏",
+  食: "偏",
+  飠: "偏",
+  水: "偏",
+  冫: "偏",
+
+  // 旁（つくり）- 漢字の右側につく部首
+  刀: "旁",
+  刂: "旁",
+  力: "旁",
+  攵: "旁",
+  欠: "旁",
+  页: "旁",
+  見: "旁",
+  角: "旁",
+  斤: "旁",
+  殳: "旁",
+
+  // 冠（かんむり）- 漢字の上につく部首
+  艹: "冠",
+  宀: "冠",
+  冖: "冠",
+  穴: "冠",
+  竹: "冠",
+  雨: "冠",
+  爫: "冠",
+  癶: "冠",
+
+  // 脚（あし）- 漢字の下につく部首
+  心: "脚",
+  皿: "脚",
+  大: "脚",
+
+  // 構（かまえ）- 漢字を囲む部首
+  囗: "構",
+  門: "構",
+  行: "構",
+  匚: "構",
+  匸: "構",
+
+  // 垂（たれ） - 漢字の上側から下側に垂れる部首
+  广: "垂",
+  厂: "垂",
+  户: "垂",
+  尸: "垂",
+
+  // 繞（にょう）- 漢字の左側から下側にかけて位置する部首
+  辶: "繞",
+  廴: "繞",
+  走: "繞",
+};
+
+// グループの表示順
+const GROUP_ORDER = ["偏", "旁", "冠", "脚", "構", "垂", "繞", "未分類"];
+
+// 部首からグループ名を返す
+function getGroup(radical) {
+  return RADICAL_GROUP_MAP[radical] || "未分類";
+}
+
 csvFile.addEventListener("change", (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -23,7 +117,6 @@ csvFile.addEventListener("change", (e) => {
 });
 
 function parseCSV(text) {
-  // 改行コード統一
   const lines = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
   const data = [];
 
@@ -32,7 +125,6 @@ function parseCSV(text) {
     const line = lines[i].trim();
     if (!line) continue;
 
-    // カンマ区切りをパース（ダブルクォート対応）
     const cols = parseCSVLine(line);
     if (cols.length < 4) continue;
 
@@ -41,7 +133,6 @@ function parseCSV(text) {
       reading: cols[1].trim(),
       radical: cols[2].trim(),
       desc: cols[3].trim(),
-      // 5列目（画像パス）があれば読み込む。なければ空文字
       image: cols[4] ? cols[4].trim() : "",
     });
   }
@@ -87,26 +178,54 @@ function parseCSVLine(line) {
 }
 
 function buildRadicalButtons() {
-  // 部首の一覧を取得（重複なし・出現順）
+  // CSVに含まれる部首だけ取得（重複なし・出現順）
   const radicals = [...new Set(allData.map((d) => d.radical).filter(Boolean))];
+
+  // グループ → 部首リスト のマップを作る
+  const groupMap = {};
+  GROUP_ORDER.forEach((g) => (groupMap[g] = []));
+
+  radicals.forEach((r) => {
+    const group = getGroup(r);
+    if (!groupMap[group]) groupMap[group] = [];
+    groupMap[group].push(r);
+  });
 
   radicalBtns.innerHTML = "";
 
-  // 「すべて」ボタン
+  // 「すべて」ボタンを最初の行に単独で置く
+  const allGroup = document.createElement("div");
+  allGroup.className = "radical-group";
   const allBtn = document.createElement("button");
   allBtn.className = "radical-btn all-btn";
   allBtn.textContent = "すべて";
   allBtn.addEventListener("click", () => setRadical("all"));
-  radicalBtns.appendChild(allBtn);
+  allGroup.appendChild(allBtn);
+  radicalBtns.appendChild(allGroup);
 
-  // 各部首ボタン
-  radicals.forEach((r) => {
-    const btn = document.createElement("button");
-    btn.className = "radical-btn";
-    btn.textContent = r;
-    btn.dataset.radical = r;
-    btn.addEventListener("click", () => setRadical(r));
-    radicalBtns.appendChild(btn);
+  // グループごとに行を作る（部首が1件もないグループは表示しない）
+  GROUP_ORDER.forEach((groupName) => {
+    const members = groupMap[groupName];
+    if (!members || members.length === 0) return;
+
+    const row = document.createElement("div");
+    row.className = "radical-group";
+
+    const label = document.createElement("span");
+    label.className = "radical-group-label";
+    label.textContent = groupName;
+    row.appendChild(label);
+
+    members.forEach((r) => {
+      const btn = document.createElement("button");
+      btn.className = "radical-btn";
+      btn.textContent = r;
+      btn.dataset.radical = r;
+      btn.addEventListener("click", () => setRadical(r));
+      row.appendChild(btn);
+    });
+
+    radicalBtns.appendChild(row);
   });
 
   filterArea.style.display = "block";
@@ -154,7 +273,6 @@ function renderCards() {
     card.className = "card";
     card.style.animationDelay = `${Math.min(i * 30, 300)}ms`;
 
-    // 画像パスがあるときだけ <img> タグを作る
     const imageHTML = item.image
       ? `<div class="card-image-wrap">
            <img
@@ -185,7 +303,6 @@ function escHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
-// 説明欄用：HTMLエスケープしてから改行を <br> に変換する
 function escHtmlWithBr(str) {
   return escHtml(str).replace(/\n/g, "<br>");
 }
