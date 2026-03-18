@@ -1,0 +1,290 @@
+:root {
+  --brown-dark: #5c3d2e;
+  --brown-mid: #8b5e3c;
+  --brown-light: #c49a6c;
+  --cream: #f5edd6;
+  --cream-dark: #ede0c4;
+  --green-dark: #3a5a40;
+  --green-mid: #588157;
+  --green-light: #a3b18a;
+  --water: #7aafcb;
+  --water-light: #c2dde8;
+  --accent: #d4845a;
+  --text-dark: #2d1b0e;
+  --text-mid: #5c3d2e;
+  --shadow: rgba(92, 61, 46, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Zen Maru Gothic", sans-serif;
+  background-color: var(--cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(
+      ellipse at 10% 20%,
+      rgba(88, 129, 87, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 90% 80%,
+      rgba(122, 175, 203, 0.12) 0%,
+      transparent 50%
+    ),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238b5e3c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ===== HEADER ===== */
+header {
+  background: linear-gradient(
+    135deg,
+    var(--brown-dark) 0%,
+    var(--brown-mid) 60%,
+    var(--green-dark) 100%
+  );
+  padding: 24px 32px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 16px var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.header-text h1 {
+  font-size: 1.8rem;
+  color: var(--cream);
+  letter-spacing: 0.12em;
+  text-shadow: 1px 2px 8px rgba(0, 0, 0, 0.3);
+}
+.header-text p {
+  font-size: 0.78rem;
+  color: var(--cream-dark);
+  opacity: 0.85;
+  margin-top: 2px;
+  letter-spacing: 0.06em;
+}
+
+/* ===== MAIN LAYOUT ===== */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 28px 20px;
+}
+
+/* ===== LOAD AREA ===== */
+.load-area {
+  background: white;
+  border: 2px dashed var(--brown-light);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 24px;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+.load-area.has-data {
+  border-style: solid;
+  border-color: var(--green-mid);
+  background: #f0f7f0;
+}
+.load-area label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background: var(--brown-mid);
+  color: white;
+  padding: 10px 22px;
+  border-radius: 24px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition:
+    background 0.2s,
+    transform 0.15s;
+  box-shadow: 0 3px 10px rgba(92, 61, 46, 0.25);
+}
+.load-area label:hover {
+  background: var(--brown-dark);
+  transform: translateY(-1px);
+}
+.load-area input[type="file"] {
+  display: none;
+}
+.load-status {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--text-mid);
+}
+.load-status.ok {
+  color: var(--green-dark);
+  font-weight: 700;
+}
+
+/* ===== FILTER AREA ===== */
+.filter-area {
+  margin-bottom: 20px;
+}
+.filter-label {
+  font-size: 0.78rem;
+  color: var(--brown-mid);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.radical-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.radical-btn {
+  background: white;
+  border: 2px solid var(--brown-light);
+  color: var(--brown-dark);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 0.85rem;
+  font-family: "Zen Maru Gothic", sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-weight: 500;
+}
+.radical-btn:hover {
+  border-color: var(--brown-mid);
+  background: var(--cream);
+}
+.radical-btn.active {
+  background: var(--brown-mid);
+  border-color: var(--brown-mid);
+  color: white;
+}
+.radical-btn.all-btn {
+  background: var(--green-mid);
+  border-color: var(--green-mid);
+  color: white;
+}
+.radical-btn.all-btn:hover {
+  background: var(--green-dark);
+  border-color: var(--green-dark);
+}
+
+/* ===== COUNT ===== */
+.result-count {
+  font-size: 0.78rem;
+  color: var(--brown-mid);
+  margin-bottom: 12px;
+  text-align: right;
+}
+
+/* ===== CARDS ===== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 12px var(--shadow);
+  border-left: 5px solid var(--brown-light);
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+  animation: fadeIn 0.25s ease both;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px var(--shadow);
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-word {
+  font-family: "Shippori Mincho", serif;
+  font-size: 1.5rem;
+  color: var(--brown-dark);
+  font-weight: 600;
+}
+.card-reading {
+  font-size: 0.8rem;
+  color: var(--brown-light);
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+.card-radical {
+  display: inline-block;
+  background: var(--green-light);
+  color: var(--green-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-top: 8px;
+  letter-spacing: 0.05em;
+}
+.card-desc {
+  font-size: 0.84rem;
+  color: var(--text-mid);
+  margin-top: 10px;
+  line-height: 1.7;
+  border-top: 1px solid var(--cream-dark);
+  padding-top: 10px;
+}
+
+/* ===== EMPTY ===== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--brown-light);
+}
+.empty-state p {
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+/* ===== CSV FORMAT HINT ===== */
+.hint-box {
+  background: var(--water-light);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-top: 14px;
+  font-size: 0.78rem;
+  color: var(--green-dark);
+  line-height: 1.8;
+  text-align: left;
+}
+.hint-box strong {
+  color: var(--brown-dark);
+}
+.hint-box span {
+  background: rgba(92, 61, 46, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.8em;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.75rem;
+  color: var(--brown-light);
+  margin-top: 20px;
+}
