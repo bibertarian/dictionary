@@ -293,6 +293,24 @@ function renderCards() {
       `;
     cardsGrid.appendChild(card);
   });
+
+  // 画像クリックイベント
+  const zoomback = document.getElementById("zoomback");
+  const zoomimg = document.getElementById("zoomimg");
+
+  if (zoomback && zoomimg) {
+    document.querySelectorAll(".card-image").forEach(function (img) {
+      img.style.cursor = "zoom-in";
+      img.addEventListener("click", function (e) {
+        zoomimg.setAttribute("src", e.target.getAttribute("src"));
+        zoomback.style.display = "flex";
+      });
+    });
+
+    zoomback.onclick = function () {
+      zoomback.style.display = "none";
+    };
+  }
 }
 
 function escHtml(str) {
