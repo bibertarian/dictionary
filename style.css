@@ -14,7 +14,6 @@
   --text-mid: #5c3d2e;
   --shadow: rgba(92, 61, 46, 0.18);
 }
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -57,12 +56,14 @@ header {
   position: relative;
   overflow: hidden;
 }
+
 .header-text h1 {
   font-size: 1.8rem;
   color: var(--cream);
   letter-spacing: 0.12em;
   text-shadow: 1px 2px 8px rgba(0, 0, 0, 0.3);
 }
+
 .header-text p {
   font-size: 0.78rem;
   color: var(--cream-dark);
@@ -90,11 +91,19 @@ header {
     border-color 0.2s,
     background 0.2s;
 }
+
 .load-area.has-data {
   border-style: solid;
   border-color: var(--green-mid);
   background: #f0f7f0;
 }
+
+.load-area.drag-over {
+  border-color: var(--brown-dark);
+  background: #fdf5ee;
+  transform: scale(1.01);
+}
+
 .load-area label {
   display: inline-flex;
   align-items: center;
@@ -112,18 +121,22 @@ header {
     transform 0.15s;
   box-shadow: 0 3px 10px rgba(92, 61, 46, 0.25);
 }
+
 .load-area label:hover {
   background: var(--brown-dark);
   transform: translateY(-1px);
 }
+
 .load-area input[type="file"] {
   display: none;
 }
+
 .load-status {
   margin-top: 10px;
   font-size: 0.82rem;
   color: var(--text-mid);
 }
+
 .load-status.ok {
   color: var(--green-dark);
   font-weight: 700;
@@ -133,6 +146,7 @@ header {
 .filter-area {
   margin-bottom: 20px;
 }
+
 .filter-label {
   font-size: 0.78rem;
   color: var(--brown-mid);
@@ -140,28 +154,43 @@ header {
   letter-spacing: 0.08em;
   margin-bottom: 8px;
 }
+
 .radical-buttons {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-/* グループ1行分 */
+
 .radical-group {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
+  display: block;
+  padding-left: 2.5em;
+  text-indent: -2.5em;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  line-height: 2;
+  margin-top: 1rem;
 }
+
 /* グループ名ラベル */
 .radical-group-label {
+  display: inline-block;
+  /* 幅を持たせるために必須 */
+  width: 3.5em;
+  /* 親のpadding/indentと数値を合わせる */
   font-size: 0.72rem;
-  color: var(--brown-light);
+  padding: 0 1rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   white-space: nowrap;
-  min-width: 3.5em;
+  text-indent: 0;
+  /* 親のマイナスインデントを打ち消して文字を正常な位置に */
+  vertical-align: middle;
 }
+
+/* ボタン */
 .radical-btn {
+  display: inline-block;
+  /* 折り返しの挙動を安定させる */
   background: white;
   border: 2px solid var(--brown-light);
   color: var(--brown-dark);
@@ -172,21 +201,30 @@ header {
   cursor: pointer;
   transition: all 0.15s;
   font-weight: 500;
+  margin-right: 4px;
+  /* ボタン同士の横の隙間 */
+  margin-bottom: 4px;
+  /* 折り返した時の下の隙間 */
+  vertical-align: middle;
 }
+
 .radical-btn:hover {
   border-color: var(--brown-mid);
   background: var(--cream);
 }
+
 .radical-btn.active {
   background: var(--brown-mid);
   border-color: var(--brown-mid);
   color: white;
 }
+
 .radical-btn.all-btn {
   background: var(--green-mid);
   border-color: var(--green-mid);
   color: white;
 }
+
 .radical-btn.all-btn:hover {
   background: var(--green-dark);
   border-color: var(--green-dark);
@@ -209,24 +247,25 @@ header {
 
 .card {
   background: white;
-  border-radius: 14px;
+  border-radius: 15px;
   padding: 18px 20px;
-  box-shadow: 0 2px 12px var(--shadow);
-  border-left: 5px solid var(--brown-light);
   transition:
     transform 0.15s,
     box-shadow 0.15s;
   animation: fadeIn 0.25s ease both;
 }
+
 .card:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px var(--shadow);
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -269,17 +308,18 @@ header {
 }
 
 .card-image {
-  width: 100%;
   height: 160px;
   object-fit: cover;
   display: block;
   border-radius: 8px;
 }
+
 /* 画像が見つからなかったとき */
 .card-image-wrap.img-error {
   background: var(--cream-dark);
   min-height: 48px;
 }
+
 .img-error-msg {
   font-size: 0.78rem;
   color: var(--brown-light);
@@ -292,12 +332,14 @@ header {
   color: var(--brown-dark);
   font-weight: 600;
 }
+
 .card-reading {
   font-size: 0.8rem;
   color: var(--brown-light);
   letter-spacing: 0.08em;
   margin-top: 2px;
 }
+
 .card-radical {
   display: inline-block;
   background: var(--green-light);
@@ -309,6 +351,7 @@ header {
   margin-top: 8px;
   letter-spacing: 0.05em;
 }
+
 .card-desc {
   font-size: 0.84rem;
   color: var(--text-mid);
@@ -325,6 +368,7 @@ header {
   padding: 60px 20px;
   color: var(--brown-light);
 }
+
 .empty-state p {
   font-size: 0.9rem;
   line-height: 1.8;
@@ -341,9 +385,11 @@ header {
   line-height: 1.8;
   text-align: left;
 }
+
 .hint-box strong {
   color: var(--brown-dark);
 }
+
 .hint-box span {
   background: rgba(92, 61, 46, 0.1);
   padding: 1px 6px;
@@ -358,4 +404,97 @@ footer {
   font-size: 0.75rem;
   color: var(--brown-light);
   margin-top: 20px;
+}
+
+.group-hen {
+  background-color: #ffdddd;
+}
+
+.group-bou {
+  background-color: #ddffdd;
+}
+
+.group-kan {
+  background-color: #ddddff;
+}
+
+.group-kyaku {
+  background-color: #fff0cc;
+}
+
+.group-kou {
+  background-color: #e0ccff;
+}
+
+.group-sui {
+  background-color: #ccf0ff;
+}
+
+.group-nyou {
+  background-color: #ffe0f0;
+}
+
+.group-unknown {
+  background-color: #eeeeee;
+}
+
+.card-radical.group-hen {
+  background: #ffe5e5;
+  color: #a33;
+}
+
+.card-radical.group-bou {
+  background: #e5ffe5;
+  color: #3a3;
+}
+
+.card-radical.group-kan {
+  background: #e5e5ff;
+  color: #33a;
+}
+
+.card-radical.group-kyaku {
+  background: #fff5cc;
+  color: #a67c00;
+}
+
+.card-radical.group-kou {
+  background: #f0e0ff;
+  color: #7a33a3;
+}
+
+.card-radical.group-sui {
+  background: #e0f7ff;
+  color: #007a99;
+}
+
+.card-radical.group-nyou {
+  background: #ffe0f0;
+  color: #a3366a;
+}
+
+.card-radical.group-unknown {
+  background: #eee;
+  color: #555;
+}
+
+.search-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#searchInput {
+  width: 80%;
+  max-width: 400px;
+  padding: 12px 20px;
+  border: 2px solid var(--brown-light);
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+#searchInput:focus {
+  border-color: var(--accent-color);
+  /* フォーカス時に色を変える */
 }

@@ -13,7 +13,6 @@
         <p>CSVを読み込んで使う漢字辞書</p>
       </div>
     </header>
-
     <div class="container">
       <!-- CSV読み込みエリア -->
       <div class="load-area" id="loadArea">
@@ -22,46 +21,61 @@
         <div class="load-status" id="loadStatus">
           CSVがまだ読み込まれていないよ
         </div>
-
         <div class="hint-box">
-          <strong>CSVの形式</strong><br />
-          1行目はヘッダー行として読み飛ばす。<br />
-          2行目以降：<span
-            >単語,読み,部首,説明,画像<br />
-            例：木,き,木,木を表す漢字。,pic/ki.png</span
-          ><br /><br />
-          <strong>画像について</strong><br />
-          5列目に画像のファイルパスを書くと、カードに画像が表示される。<br />
+          <strong> CSVの形式 </strong>
+          <br />
+          1行目はヘッダー行として読み飛ばす。
+          <br />
+          2行目以降：
+          <span>
+            単語,読み,部首,説明,画像
+            <br />
+            例：木,き,木,木を表す漢字。,pic/ki.png
+          </span>
+          <br />
+          <br />
+          <strong> 画像について </strong>
+          <br />
+          5列目に画像のファイルパスを書くと、カードに画像が表示される。
+          <br />
           画像は
-          <span>index.html と同じフォルダ</span> を基準にしたパスで書く。<br />
+          <span> index.html と同じフォルダ </span>
+          を基準にしたパスで書く。
+          <br />
           画像なしの場合は5列目を空欄にするか、省略してもOK！
         </div>
       </div>
-
       <!-- 部首フィルター -->
       <div class="filter-area" id="filterArea" style="display: none">
+        <div class="search-container">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="漢字・読み・説明で検索..."
+          />
+        </div>
         <div class="filter-label">部首で絞り込む</div>
+        <div id="radicalButtons"></div>
         <div class="radical-buttons" id="radicalButtons"></div>
       </div>
-
       <!-- 件数 -->
       <div class="result-count" id="resultCount" style="display: none"></div>
-
       <!-- カードグリッド -->
       <div class="cards-grid" id="cardsGrid"></div>
-
       <!-- 空の状態 -->
       <div class="empty-state" id="emptyState">
-        <p>CSVファイルを選ぶと<br />ここに単語が表示されるよ</p>
+        <p>
+          CSVファイルを選ぶと
+          <br />
+          ここに単語が表示されるよ
+        </p>
       </div>
     </div>
-
     <footer>オフライン漢字辞書</footer>
     <!-- 画像拡大オーバーレイ（body直下に1個だけ置く） -->
     <div id="zoomback">
       <img id="zoomimg" src="" alt="拡大画像" />
     </div>
-
     <script src="script.js"></script>
   </body>
 </html>
